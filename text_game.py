@@ -5,13 +5,36 @@ import random
 from msvcrt import getch
 import time
 
-lives = 10
+#Hella variables
+match_time = 150
+red_alliance_score = 0
+blue_alliance_score = 0
+low_goal = 1
+high_goal = 2
+inner_goal = 3
+rotation_control = 10
+position_control = 20
+end_hang = 25
+end_park = 5
+end_level = 15
+stage1 = 9
+stage2and3 = 20
+pen_auto_sector = 3
+pen_alliance_zones = 15
+pen_pin = 3
+pen_damage = 15
+begin_cells = 3
+robot_cells = 0
+robot_cells_max = 5
+
 
 print("""Hello and welcome to the 2020 FIRST Robotics Competition!
 This years game: INFINITE POSTPONEMENT-er...RECHARGE!
 press ENTER to begin or Q to Quit""")
 
-if getch() == b'/r':
+#char_catch has to be redefined before every if check since getch() behaves like input()
+char_catch = getch()
+if b'\r' in char_catch:
     #Excruciating Pain via Text Wall
     print("""Infinite Recharge is played by 2 alliances of 3 robots each.
     Scoring is done when a robot from either alliance puts a yellow POWER CELL into their alliances POWER PORT
@@ -28,8 +51,8 @@ if getch() == b'/r':
         You can\'t damage other robots (Penalty of 15 Points given to the opposing alliance and a YELLOW CARD given against you
     There's 3 stages of play during the game
         The first stage is completed when a alliance scores 9 power cells
-        The second stage is completed when a alliance scores 20 more power cells and ROTATION CONTROL is completed
-        The third stage is completed when a alliance scores 20 more power and POSITION CONTROL is completed
+        The second stage is completed when a alliance scores 20 more power cells and ROTATION CONTROL is completed (10 Points to corrosponding Alliance)
+        The third stage is completed when a alliance scores 20 more power and POSITION CONTROL is completed (20 Points to corrosponding Alliance)
         (The option to spin the CONTROL PANEL will show up when ROTATION & POSITION CONTROL is activated and will dissapear after it's been completed)
     FINALLY, in the last 30 seconds of the game, you're able to score by climbing the SHIELD GENERATOR SWITCH
         For each robot hung, the corrosponding alliance scores 25 points
@@ -51,3 +74,26 @@ if getch() == b'/r':
             user_alliance = "Red Alliance"
         print(f"""For the match you are on the {user_alliance}
 You will be playing against the computer on the {comp_alliance}""")
+        print("Would you like to begin? Press Enter to Continue or Q to Quit")
+        char_catch = getch()
+        if b'\r' in char_catch:
+            #Start of game
+            print("Drivers behind the lines in...")
+            countdown = 3
+            for x in range(countdown):
+                print(f"{countdown}!")
+                countdown -= 1
+                time.sleep(1)
+            print("GO!")
+            while True:
+                print(f"""
+            MATCH SCORE:
+Blue Alliance: {blue_alliance_score} Red Alliance: {red_alliance_score}
+            MATCH TIME: {match_time}""")
+        #Exit condition for pre-game
+        elif char_catch in [b'q',b'Q']:
+            exit("Goodbye!")
+
+#Exit condition for beginning
+elif char_catch in [b'q',b'Q']:
+    exit("Goodbye!")
