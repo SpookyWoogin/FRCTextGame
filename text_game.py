@@ -3,6 +3,7 @@
 
 import random
 from msvcrt import getch
+import time
 
 lives = 10
 
@@ -36,3 +37,17 @@ if getch() == b'/r':
         If the switch is level, the corrosponding alliance scores 15 points
         
         -=- END OF TEXT WALL -=-""")
+    time.sleep(10)
+
+    while True:
+        #1 = Blue Alliance
+        #2 = Red Alliance
+        alliance = random.randint(1,2)
+        if alliance == 1:
+            user_alliance = "Blue Alliance"
+            comp_alliance = "Red Alliance"
+        else:
+            comp_alliance = "Blue Alliance"
+            user_alliance = "Red Alliance"
+        print(f"""For the match you are on the {user_alliance}
+You will be playing against the computer on the {comp_alliance}""")
