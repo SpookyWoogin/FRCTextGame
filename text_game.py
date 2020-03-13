@@ -26,6 +26,7 @@ pen_damage = 15
 begin_cells = 3
 robot_cells = 0
 robot_cells_max = 5
+powercount = 0
 
 
 print("""Hello and welcome to the 2020 FIRST Robotics Competition!
@@ -85,11 +86,56 @@ You will be playing against the computer on the {comp_alliance}""")
                 countdown -= 1
                 time.sleep(1)
             print("GO!")
+            auto_message_mod = ""
+            if random.randint(1,20) == 6:
+                if random.randint(1,2) == 2:
+                    blue_alliance_score += pen_auto_sector
+                    auto_message_mod = "However, your robot entered the opposing alliances sector and incurred a foul! The opposing alliance gained 3 of their points from it!"
+                else:
+                    red_alliance_score += pen_auto_sector
+                    auto_message_mod = "However, the opposing robot entered your alliances sector and incurred a foul! Your alliance gained 3 of your points from it!"
+            blue_alliance_score += random.randint(1,12) * (high_goal * 2)
+            red_alliance_score += random.randint(1,12) * (high_goal * 2)
+            match_time -= 15
+            print(f"During the auto period, the blue alliance scored {blue_alliance_score}, and the red alliance scored {red_alliance_score}. {auto_message_mod}")
+            match_time -= 15
+            time.sleep(3)
+
+            wheelstage = 0
             while True:
+                colorwheel = "6) Color wheel Unavailable"
+                climb = "7) Climb Unavailable"
+                while wheelstage == 0:
+                    if powercount >= 29:
+                        colorwheel = "6) Spin the color wheel"
+                    break
+                while wheelstage == 1:
+                    if powercount >= 49:
+                        colorwheel = "6) Spin the color wheel"
+                    break
+                if match_time <= 30:
+                    climb = "7) Climb!!!"
+
                 print(f"""
             MATCH SCORE:
 Blue Alliance: {blue_alliance_score} Red Alliance: {red_alliance_score}
             MATCH TIME: {match_time}""")
+                print(f"""Power Cells currently in robot: {robot_cells}
+What would you like to do?
+1) Collect Power Cells
+2) Go for the low goal
+3) Go for the high goal
+4) Go for the inner port
+5) Play Defense
+{colorwheel}
+{climb}
+Q) Quit""")
+                char_catch = getch()
+                if b'1' in char_catch:
+                    print("Collect Power Cells")
+                elif char_catch in [b'q',b'Q']:
+                    exit("Goodbye!")
+        
         #Exit condition for pre-game
         elif char_catch in [b'q',b'Q']:
             exit("Goodbye!")
