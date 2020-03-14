@@ -4,6 +4,7 @@
 import random
 import time
 
+#Backup method for Linux or MacOS users where msvcrt doesn't exist
 try:
     from msvcrt import getch
     def keypress():
@@ -14,7 +15,7 @@ except ModuleNotFoundError:
         if key == "":
             return b'\r'
         else:
-            return b"'"+ key + "'"
+            return key.encode()
 
 #Hella variables
 match_time = 150
