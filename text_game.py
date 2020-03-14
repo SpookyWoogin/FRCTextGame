@@ -2,8 +2,19 @@
 #The FIRST Robotics Competition and Infinite Recharge are trademarks of FIRST
 
 import random
-from msvcrt import getch
 import time
+
+try:
+    from msvcrt import getch
+    def keypress():
+        return getch()
+except ModuleNotFoundError:
+    def keypress():
+        key = input()
+        if key == "":
+            return b'\r'
+        else:
+            return b"'"+ key + "'"
 
 #Hella variables
 match_time = 150
@@ -28,13 +39,12 @@ robot_cells = 0
 robot_cells_max = 5
 powercount = 0
 
-
 print("""Hello and welcome to the 2020 FIRST Robotics Competition!
 This years game: INFINITE POSTPONEMENT-er...RECHARGE!
 press ENTER to begin or Q to Quit""")
 
 #char_catch has to be redefined before every if check since getch() behaves like input()
-char_catch = getch()
+char_catch = keypress()
 if b'\r' in char_catch:
     #Excruciating Pain via Text Wall
     print("""Infinite Recharge is played by 2 alliances of 3 robots each.
@@ -76,7 +86,7 @@ if b'\r' in char_catch:
         print(f"""For the match you are on the {user_alliance}
 You will be playing against the computer on the {comp_alliance}""")
         print("Would you like to begin? Press Enter to Continue or Q to Quit")
-        char_catch = getch()
+        char_catch = keypress()
         if b'\r' in char_catch:
             #Start of game
             print("Drivers behind the lines in...")
@@ -130,7 +140,7 @@ What would you like to do?
 {colorwheel}
 {climb}
 Q) Quit""")
-                char_catch = getch()
+                char_catch = keypress()
                 if b'1' in char_catch:
                     print("Collect Power Cells")
                 elif char_catch in [b'q',b'Q']:
