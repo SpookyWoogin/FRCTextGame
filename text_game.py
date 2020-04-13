@@ -109,7 +109,6 @@ You will be playing against the computer on the {comp_alliance}""")
             red_alliance_score += random.randint(1,12) * (high_goal * 2)
             match_time -= 15
             print(f"During the auto period, the blue alliance scored {blue_alliance_score}, and the red alliance scored {red_alliance_score}. {auto_message_mod}")
-            match_time -= 15
             time.sleep(3)
 
             wheelstage = 0
@@ -143,7 +142,52 @@ What would you like to do?
 Q) Quit""")
                 char_catch = keypress()
                 if b'1' in char_catch:
-                    print("Collect Power Cells")
+                    powercollect = random.randint(0,15)
+                    if powercollect != 0:
+                        if powercollect >= 5:
+                            powercollect  = 5
+                        if powercollect + robot_cells > 5:
+                            powercollect = 5 - robot_cells
+                        robot_cells += powercollect
+                        print(f"Your robot went and collected {powercollect} Power Cells! This brings your total up to {robot_cells} Power Cells!")
+                    else:
+                        print("Ouch! Your robot didn't collect any Power Cells! Better luck next time!")
+                if b'2' in char_catch:
+                    if robot_cells >= 1:
+                        lowshoot = random.randint(1,robot_cells)
+                        lowmiss = random.randint(1,100)
+                        if lowmiss == 50:
+                            lowmissed = random.randint(1, lowshoot)
+                            lowshoot -= lowmissed
+                        robot_cells -= lowshoot
+                        powercount += lowshoot
+                        print(f"Your robot shot {lowshoot} Power Cells, gaining your alliance {lowshoot} points!")
+                        if user_alliance == "Blue Alliance":
+                            blue_alliance_score += lowshoot
+                        elif user_alliance == "Red Alliance":
+                            red_alliance_score += lowshoot
+                    else:
+                        print("You don't have enough Power Cells to do this! Go get more!")
+                if b'3' in char_catch:
+                    highmissed = 0
+                    if robot_cells >= 1:
+                        highshoot1 = random.randint(1,robot_cells)
+                        highshoot2 = highshoot1
+                        highmiss = random.randint(1,2)
+                        if highmiss == 2:
+                            highmissed = random.randint(1,highshoot2)
+                            highshoot2 -= highmissed
+                        robot_cells -= highshoot2
+                        powercount += highshoot2
+                        highscore = highshoot2 * high_goal
+                        print (f"Your robot shot {highshoot1} Power Cells and missed {highmissed} shots! Your alliance gained {highscore} points!")
+                        if user_alliance == "Blue Alliance":
+                            blue_alliance_score += highscore
+                        elif user_alliance == "Red Alliance":
+                            red_alliance_score += highscore
+                    else:
+                        print("You don't have enough Power Cells to do this! Go get more!")
+
                 elif char_catch in [b'q',b'Q']:
                     exit("Goodbye!")
         
