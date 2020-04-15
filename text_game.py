@@ -17,8 +17,53 @@ except ModuleNotFoundError:
         else:
             return key.encode()
 
-#Hella variables
 match_time = 150
+
+class matchtimer():
+    #Class that controls the match timer throughout the program
+    def auto(self):
+        global match_time
+        match_time -= 15
+    def intake(self):
+        global match_time
+        if match_time >= 10:
+            match_time -= random.randint(3,10)
+        else:
+            match_time -= random.randint(match_time-2,match_time)
+    def lowgoal(self):
+        global match_time
+        if match_time >= 7:
+            match_time -= random.randint(3,7)
+        else:
+            match_time -= random.randint(match_time-2,match_time)
+    def highgoal(self):
+        global match_time
+        if match_time >= 15:
+            match_time -= random.randint(5,15)
+        else:
+            match_time -= random.randint(match_time-2,match_time)
+    def inner(self):
+        global match_time
+        if match_time >= 17:
+            match_time -= random.randint(7,17)
+        else:
+            match_time -= random.randint(match_time-2,match_time)
+    def cwheel(self):
+        global match_time
+        if match_time >= 10:
+            match_time -= random.rantint(5,10)
+        else:
+            match_time -= random.randint(match_time-2,match_time)
+    def end(self):
+        global match_time
+        if match_time >= 5:    
+            match_time -= (5,match_time)
+            fail_flag = False
+        else:
+            fail_flag =True
+matchtimer = matchtimer()
+
+#Hella variables
 red_alliance_score = 0
 blue_alliance_score = 0
 low_goal = 1
@@ -72,7 +117,7 @@ if b'\r' in char_catch:
         If the switch is level, the corrosponding alliance scores 15 points
         
         -=- END OF TEXT WALL -=-""")
-    time.sleep(10)
+    #time.sleep(10)
 
     while True:
         #1 = Blue Alliance
@@ -107,7 +152,7 @@ You will be playing against the computer on the {comp_alliance}""")
                     auto_message_mod = "However, the opposing robot entered your alliances sector and incurred a foul! Your alliance gained 3 of your points from it!"
             blue_alliance_score += random.randint(1,12) * (high_goal * 2)
             red_alliance_score += random.randint(1,12) * (high_goal * 2)
-            match_time -= 15
+            matchtimer.auto()
             print(f"During the auto period, the blue alliance scored {blue_alliance_score}, and the red alliance scored {red_alliance_score}. {auto_message_mod}")
             time.sleep(3)
 
@@ -142,16 +187,15 @@ What would you like to do?
 Q) Quit""")
                 char_catch = keypress()
                 if b'1' in char_catch:
-                    powercollect = random.randint(0,15)
+                    powercollect = random.randint(0,5)
                     if powercollect != 0:
-                        if powercollect >= 5:
-                            powercollect  = 5
                         if powercollect + robot_cells > 5:
                             powercollect = 5 - robot_cells
                         robot_cells += powercollect
                         print(f"Your robot went and collected {powercollect} Power Cells! This brings your total up to {robot_cells} Power Cells!")
                     else:
                         print("Ouch! Your robot didn't collect any Power Cells! Better luck next time!")
+                    matchtimer.intake()
                 if b'2' in char_catch:
                     if robot_cells >= 1:
                         lowshoot = random.randint(1,robot_cells)
@@ -168,6 +212,7 @@ Q) Quit""")
                             red_alliance_score += lowshoot
                     else:
                         print("You don't have enough Power Cells to do this! Go get more!")
+                    matchtimer.lowgoal()
                 if b'3' in char_catch:
                     highmissed = 0
                     if robot_cells >= 1:
@@ -177,7 +222,7 @@ Q) Quit""")
                         if highmiss == 2:
                             highmissed = random.randint(1,highshoot2)
                             highshoot2 -= highmissed
-                        robot_cells -= highshoot2
+                        robot_cells -= highshoot1
                         powercount += highshoot2
                         highscore = highshoot2 * high_goal
                         print (f"Your robot shot {highshoot1} Power Cells and missed {highmissed} shots! Your alliance gained {highscore} points!")
@@ -187,6 +232,16 @@ Q) Quit""")
                             red_alliance_score += highscore
                     else:
                         print("You don't have enough Power Cells to do this! Go get more!")
+                    matchtimer.highgoal()
+
+                
+                if match_time == 0:
+                    print("Aaaand game! Press Q to Quit")
+                    char_catch = keypress()
+                    if char_catch in [b'q',b'Q']:
+                        exit("Goodbye!")
+
+                    
 
                 elif char_catch in [b'q',b'Q']:
                     exit("Goodbye!")
