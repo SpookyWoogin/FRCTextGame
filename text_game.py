@@ -29,31 +29,31 @@ class matchtimer():
         if match_time >= 10:
             match_time -= random.randint(3,10)
         else:
-            match_time -= random.randint(match_time-2,match_time)
+            match_time -= random.randint(1,match_time)
     def lowgoal(self):
         global match_time
         if match_time >= 7:
             match_time -= random.randint(3,7)
         else:
-            match_time -= random.randint(match_time-2,match_time)
+            match_time -= random.randint(1,match_time)
     def highgoal(self):
         global match_time
         if match_time >= 15:
             match_time -= random.randint(5,15)
         else:
-            match_time -= random.randint(match_time-2,match_time)
+            match_time -= random.randint(1,match_time)
     def inner(self):
         global match_time
         if match_time >= 17:
             match_time -= random.randint(7,17)
         else:
-            match_time -= random.randint(match_time-2,match_time)
+            match_time -= random.randint(1,match_time)
     def cwheel(self):
         global match_time
         if match_time >= 10:
             match_time -= random.rantint(5,10)
         else:
-            match_time -= random.randint(match_time-2,match_time)
+            match_time -= random.randint(1,match_time)
     def end(self):
         global match_time
         if match_time >= 5:    
