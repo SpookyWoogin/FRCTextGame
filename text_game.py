@@ -233,6 +233,27 @@ Q) Quit""")
                     else:
                         print("You don't have enough Power Cells to do this! Go get more!")
                     matchtimer.highgoal()
+                if b'4' in char_catch:
+                    innermissed = 0
+                    if robot_cells >= 1:
+                        innershoot1 = random.randint(1,robot_cells)
+                        innershoot2 = innershoot1
+                        innermissed = random.randint(1,highshoot2)
+                        innershoot2 -=innermissed
+                        highshoot1 = innermissed
+                        robot_cells -= highshoot1
+                        powercount += innershoot1
+                        innerscore = highshoot1 * high_goal + innershoot2 * inner_goal
+                        print(f"""Your robot shot {innershoot1} Power Cells towards the inner port, missing {innermissed} shots and scoring them into the high goal instead!
+    Your Alliance gained {innerscore} points!""")
+                        if user_alliance == "Blue Alliance":
+                            blue_alliance_score += innerscore
+                        elif user_alliance == "Red Alliance":
+                            red_alliance_score += innerscore
+                        else:
+                            print("You don't have enough Power Cells to do this! Go get more!")
+                if b'5' in char_catch:
+                    
 
                 
                 if match_time == 0:
